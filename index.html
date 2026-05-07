@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VibesPlayer — by Abdul & Murid Teladan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     WELCOME SCREEN
+═══════════════════════════════════════ -->
+<div id="welcomeScreen" class="welcome-screen">
+  <div class="w-noise"></div>
+  <div class="w-orbs">
+    <div class="orb o1"></div>
+    <div class="orb o2"></div>
+    <div class="orb o3"></div>
+  </div>
+
+  <div class="w-card">
+    <div class="w-badge"><i class="fab fa-youtube"></i> VibesPlayer</div>
+
+    <h1 class="w-title">
+      <span class="line1">Welcome beb,</span>
+      <span class="line2">kenal ga??</span>
+    </h1>
+
+    <p class="w-msg">
+      ama si <strong>Abdul</strong> — si <em>Murid Teladan</em> itu<br>
+      yang rajin ciahh 😍😍😭♻️
+    </p>
+
+    <div class="w-bars">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <button class="w-btn" id="enterBtn">
+      <i class="fas fa-music"></i>
+      Ayo Dengerin Musik
+      <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <p class="w-powered">Powered by YouTube Data API v3 • Gratis • Tanpa Batas</p>
+  </div>
+
+  <div class="w-footer">credit by abdul &amp; murid teladan ✦ © 2026 VibesPlayer</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     MAIN APP
+═══════════════════════════════════════ -->
+<div id="mainApp" class="main-app hidden">
+
+  <div class="bg-blobs">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+  </div>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="brand" onclick="showPage('home')">
+      <span class="brand-icon">◆</span>
+      <span>Vibes<em>Player</em></span>
+    </div>
+
+    <div class="searchbar" id="searchbar">
+      <i class="fas fa-search"></i>
+      <input id="topSearch" type="text" placeholder="Cari lagu, artis..." autocomplete="off">
+      <button id="topSearchBtn"><i class="fas fa-arrow-right"></i></button>
+    </div>
+
+    <div class="topbar-right">
+      <button class="tbar-btn" onclick="showPage('trending')"><i class="fas fa-fire"></i></button>
+      <button class="tbar-btn" onclick="showPage('liked')"><i class="fas fa-heart"></i></button>
+      <button class="tbar-btn" onclick="showApiKeyModal()" title="Set API Key"><i class="fas fa-key"></i></button>
+      <div class="ava">AM</div>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+      <ul class="nav-list">
+        <li><a class="nlink active" data-page="home" href="#"><i class="fas fa-house"></i><span>Beranda</span></a></li>
+        <li><a class="nlink" data-page="search" href="#"><i class="fas fa-search"></i><span>Cari</span></a></li>
+        <li><a class="nlink" data-page="trending" href="#"><i class="fas fa-fire"></i><span>Trending</span></a></li>
+        <li><a class="nlink" data-page="liked" href="#"><i class="fas fa-heart"></i><span>Favorit</span></a></li>
+        <li><a class="nlink" data-page="queue" href="#"><i class="fas fa-list"></i><span>Antrian</span></a></li>
+      </ul>
+
+      <div class="sb-section">
+        <p class="sb-label">PLAYLIST CEPAT</p>
+        <a class="pl-link" href="#" onclick="searchAndGo('trending musik indonesia 2026')">🇮🇩 Hits Indonesia</a>
+        <a class="pl-link" href="#" onclick="searchAndGo('lofi chill study music 2026')">☕ Lofi Chill</a>
+        <a class="pl-link" href="#" onclick="searchAndGo('top 50 global pop 2026')">🌍 Top Global</a>
+        <a class="pl-link" href="#" onclick="searchAndGo('galau patah hati lagu sedih')">😭 Galau Hour</a>
+        <a class="pl-link" href="#" onclick="searchAndGo('EDM party remix 2026')">🎉 Party EDM</a>
+        <a class="pl-link" href="#" onclick="searchAndGo('kpop bts blackpink 2026')">💜 K-Pop</a>
+      </div>
+
+      <div class="sb-credit">
+        <span class="sbc-dot">◆</span>
+        <div>
+          <strong>Abdul</strong><br>
+          <span>&amp; Murid Teladan</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- PAGES -->
+    <main class="content">
+
+      <!-- HOME -->
+      <div class="page active" id="pageHome">
+        <div class="ph">
+          <h1 id="greetMsg">Selamat Datang 🎧</h1>
+          <p>Temukan musikmu hari ini</p>
+        </div>
+
+        <div class="api-warn" id="apiWarn">
+          <i class="fas fa-triangle-exclamation"></i>
+          <div>
+            <strong>API Key belum diisi!</strong>
+            <p>Buka <code>app.js</code> → isi <code>API_KEY</code> dengan key YouTube kamu.</p>
+          </div>
+          <button onclick="this.parentElement.remove()">✕</button>
+        </div>
+
+        <h2 class="sec-title">🔥 Trending Indonesia</h2>
+        <div class="hscroll" id="homeTrending"></div>
+
+        <h2 class="sec-title">🎵 Pop Indonesia</h2>
+        <div class="hscroll" id="homePop"></div>
+
+        <h2 class="sec-title">🌙 Lofi &amp; Chill</h2>
+        <div class="hscroll" id="homeLofi"></div>
+
+        <h2 class="sec-title">🌍 Top Global</h2>
+        <div class="hscroll" id="homeGlobal"></div>
+
+        <div class="home-footer">
+          <div class="hf-inner">
+            <div class="hf-icon">◆</div>
+            <h3>Abdul &amp; Murid Teladan</h3>
+            <p>Made with 💚 • © 2026 VibesPlayer</p>
+            <p class="hf-small">Powered by YouTube Data API v3</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SEARCH -->
+      <div class="page" id="pageSearch">
+        <div class="ph"><h1>🔍 Cari Lagu</h1><p>Ketik apapun — lagu, artis, lirik</p></div>
+        <div class="big-search">
+          <i class="fas fa-search"></i>
+          <input id="bigSearch" type="text" placeholder="Cari lagu favoritmu...">
+        </div>
+        <div id="searchStatus" class="status hidden"></div>
+        <div class="cards-grid" id="searchGrid"></div>
+      </div>
+
+      <!-- TRENDING -->
+      <div class="page" id="pageTrending">
+        <div class="ph"><h1>🔥 Trending</h1><p>Lagu yang lagi viral sekarang</p></div>
+        <div class="tabs" id="trendTabs">
+          <button class="tab active" onclick="loadTrending('trending musik indonesia 2026',this)">🇮🇩 Indonesia</button>
+          <button class="tab" onclick="loadTrending('top hits global music 2026',this)">🌍 Global</button>
+          <button class="tab" onclick="loadTrending('trending kpop 2026',this)">💜 K-Pop</button>
+          <button class="tab" onclick="loadTrending('viral tiktok music 2026',this)">📱 TikTok</button>
+          <button class="tab" onclick="loadTrending('lofi hip hop chill beats',this)">☕ Lofi</button>
+        </div>
+        <div class="cards-grid" id="trendGrid"></div>
+      </div>
+
+      <!-- LIKED -->
+      <div class="page" id="pageLiked">
+        <div class="ph"><h1>❤️ Favorit</h1><p>Lagu yang kamu suka</p></div>
+        <div class="empty-state" id="likedEmpty"><i class="fas fa-heart"></i><p>Belum ada favorit</p><span>Klik ❤️ di lagu manapun</span></div>
+        <div class="track-list" id="likedList"></div>
+      </div>
+
+      <!-- QUEUE -->
+      <div class="page" id="pageQueue">
+        <div class="ph"><h1>📋 Antrian</h1><p>Lagu yang akan diputar</p></div>
+        <div class="empty-state" id="queueEmpty"><i class="fas fa-list"></i><p>Antrian kosong</p><span>Putar lagu untuk mengisi antrian</span></div>
+        <div class="track-list" id="queueList"></div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- HIDDEN YT PLAYER -->
+  <div id="ytWrap"><div id="ytPlayer"></div></div>
+
+  <!-- PLAYER BAR -->
+  <div class="player" id="playerBar">
+    <div class="p-left">
+      <div class="p-art">
+        <img id="pThumb" src="" alt="">
+        <div class="p-art-glow"></div>
+      </div>
+      <div class="p-info">
+        <p class="p-title" id="pTitle">Tidak ada lagu</p>
+        <p class="p-artist" id="pArtist">—</p>
+      </div>
+      <button class="p-heart" id="pHeart" onclick="toggleLikeNow()"><i class="far fa-heart"></i></button>
+    </div>
+
+    <div class="p-mid">
+      <div class="p-controls">
+        <button class="pc" id="pcShuffle" onclick="toggleShuffle()" title="Shuffle"><i class="fas fa-shuffle"></i></button>
+        <button class="pc" onclick="prevTrack()"><i class="fas fa-backward-step"></i></button>
+        <button class="pc play-btn" id="pcPlay" onclick="togglePlay()"><i class="fas fa-play"></i></button>
+        <button class="pc" onclick="nextTrack()"><i class="fas fa-forward-step"></i></button>
+        <button class="pc" id="pcRepeat" onclick="toggleRepeat()" title="Repeat"><i class="fas fa-repeat"></i></button>
+      </div>
+      <div class="p-prog">
+        <span id="pCur">0:00</span>
+        <div class="prog-bar" id="progBar" onclick="seekTo(event)">
+          <div class="prog-fill" id="progFill"></div>
+        </div>
+        <span id="pDur">0:00</span>
+      </div>
+    </div>
+
+    <div class="p-right">
+      <button class="pc sm" onclick="showPage('queue')"><i class="fas fa-list"></i></button>
+      <div class="vol">
+        <i class="fas fa-volume-high" id="volIcon" onclick="toggleMute()"></i>
+        <input type="range" id="volSlider" min="0" max="100" value="80" oninput="setVol(this.value)">
+      </div>
+    </div>
+  </div>
+
+  <!-- API KEY MODAL -->
+  <div id="apiKeyModal" class="api-modal hidden">
+    <div class="api-modal-box">
+      <div class="api-modal-icon">🔑</div>
+      <h2>YouTube API Key</h2>
+      <p>Masukkan API Key kamu dari <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Google Cloud Console</a></p>
+      <input id="apiKeyInput" type="text" placeholder="AIzaSy..." autocomplete="off" onkeypress="if(event.key==='Enter')saveApiKey()">
+      <div class="api-modal-btns">
+        <button class="btn-save" onclick="saveApiKey()"><i class="fas fa-check"></i> Simpan & Muat Musik</button>
+        <button class="btn-cancel" onclick="hideApiKeyModal()">Batal</button>
+      </div>
+      <div class="api-modal-steps">
+        <b>Cara dapat API Key gratis:</b>
+        <ol>
+          <li>Buka <code>console.cloud.google.com</code></li>
+          <li>Search → <code>YouTube Data API v3</code> → Enable</li>
+          <li>APIs & Services → Credentials → + Create Credentials → API Key</li>
+          <li>Copy & paste di sini ✅</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /mainApp -->
+
+<div id="toast" class="toast"></div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="app.js"></script>
+</body>
+</html>
